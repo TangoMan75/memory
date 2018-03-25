@@ -1,0 +1,65 @@
+/* Matthias Morin */
+/* email: matthias.morin@gmail.com */
+
+* {
+ 	box-sizing: border-box;
+}
+
+body {
+	background-image: url('../img/bg.png');
+}
+
+.title {
+	color: #2980B9;	/* Lobster */
+	font-family: 'Permanent Marker', cursive;
+	font-size: 35px;
+	height: 90px;
+	line-height: 90px;
+	margin-bottom: 0px;
+}
+
+.container {
+	background-color: rgba(255, 255, 255, .5);
+	border-radius: 6px;
+	height: 820px;
+	margin: auto;
+	text-align: center;
+	width: 1080px;
+	padding: 0px;
+}
+
+.card {
+	background-image: url('../img/caribou.png');
+	background-size: 100px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: #40D47E;	/* Green */
+	height: 140px;
+	width: 140px;
+	padding: 20px;
+	margin: 0px 20px 40px 20px;
+	border-radius: 6px;
+	display: inline-block;
+}
+
+.face-down {
+	background-color: black;
+}
+
+.face-up {
+	background-color: white;
+}
+
+.matched {
+	background-color: #40D47E;	/* Green */
+}
+
+.unselectable {
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
+	user-drag: none; 
+}
