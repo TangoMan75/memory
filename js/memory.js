@@ -11,12 +11,13 @@ var arPictures = ['camel', 'chick', 'cow', 'dog', 'elephant', 'fish', 'lamb', 'o
 // Duplicates array with itself
 var arPictures = arPictures.concat(arPictures);
 
-// Defines $Mat as a global jQuery object
-$Mat = $('#mat');
+// Defines $grid as a global jQuery object
+$grid = $('#grid');
 
-// Starts new game on title click
-$('.title').on('mousedown', function () {
-    fnNewGame();
+// Starts new game on button click
+$('#start').click(function (e) {
+    e.preventDefault();
+    newGame();
 });
 
 /**
@@ -25,7 +26,7 @@ $('.title').on('mousedown', function () {
  * @param  {object} objTarget target jQuery object
  * @return {boolean}           false
  */
-function fnMakeUnselectable(objTarget) {
+function makeUnselectable(objTarget) {
 
     objTarget
         .addClass('unselectable')      // All these attributes are inheritable
@@ -45,9 +46,9 @@ function fnMakeUnselectable(objTarget) {
 /**
  * GameOver Check
  */
-function fnCheckGameOver() {
+function checkGameOver() {
 
-    if (!$Mat.children().hasClass('face-down')) {
+    if (!$grid.children().hasClass('face-down')) {
         alert('Congratulations !!!');
     }
 }
@@ -57,7 +58,7 @@ function fnCheckGameOver() {
  *
  * @param  {object} $Card Card jQuery object
  */
-function fnCheckMatch($Card) {
+function checkMatch($Card) {
 
     if ($Card.attr('style') == gstrFirstCard) {
         // Cards are matching
@@ -65,14 +66,14 @@ function fnCheckMatch($Card) {
         $('.face-up').addClass('matched');
         $('.matched').removeClass('face-up');
         // Check if game is finished
-        fnCheckGameOver();
-        fnNextTry();
+        checkGameOver();
+        nextTry();
     }
     else {
         // Cards do not match
         // Waits one second and resets new
         window.setTimeout(function () {
-            fnNextTry();
+            nextTry();
         }, 1000);
     }
 }
@@ -83,7 +84,7 @@ function fnCheckMatch($Card) {
  * @param  {object} $Card      jQuery Card
  * @param  {string} strPicture Picture
  */
-function fnDrawCard($Card, strPicture) {
+function drawCard($Card, strPicture) {
 
     $Card = $('<div>');
     $Card.addClass('card');
@@ -95,9 +96,9 @@ function fnDrawCard($Card, strPicture) {
         "background-image": "url('img/" + strPicture + ".png')",
     });
 
-    fnMakeUnselectable($Card);
+    makeUnselectable($Card);
 
-    $Mat.append($Card);
+    $grid.append($Card);
     $Card.on('mousedown', function () {
         if (!$Card.hasClass('unclickable') && $Card.hasClass('face-down')) {
             fnFlip($Card);
@@ -129,7 +130,7 @@ function fnFlip($Card) {
         // Makes all cards unclickable
         $('.card').addClass('unclickable');
         // Checks if cards match
-        fnCheckMatch($Card);
+        checkMatch($Card);
     }
 
 }
@@ -137,31 +138,31 @@ function fnFlip($Card) {
 /**
  * Init fresh new game
  */
-function fnNewGame() {
+function newGame() {
 
     // Empties mat
-    $Mat.empty();
+    $grid.empty();
 
     // Resets game variables
     gblnIsFirst = true;
     gstrFirstCard = '';
 
     // Shuffles cards
-    arPictures = fnShuffle(arPictures);
+    arPictures = shuffle(arPictures);
 
     // Spawns cards on the mat
     var intPictureCount = arPictures.length
     for (i = 0; i < intPictureCount; i++) {
         // Each card needs a unique name for reference
         gintCardIndex = i;
-        fnDrawCard(gintCardIndex, arPictures[i]);
+        drawCard(gintCardIndex, arPictures[i]);
     }
 }
 
 /**
  * Prepares mat for next try
  */
-function fnNextTry() {
+function nextTry() {
 
     // Flips all face-up cards face-down
     $('.face-up').addClass('face-down');
@@ -179,7 +180,7 @@ function fnNextTry() {
  * @param  {array} arArray array
  * @return {array}         Shuffled array
  */
-function fnShuffle(arArray) {
+function shuffle(arArray) {
 
     var intCurrentIndex = arArray.length, intTemp, intRandomIndex;
 
